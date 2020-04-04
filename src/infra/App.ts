@@ -1,4 +1,4 @@
-import { container } from "src/config/components";
+import { container } from "@config/components";
 
 export interface App {
   start(): Promise<void>;

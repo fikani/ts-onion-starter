@@ -50,6 +50,9 @@
       ],
       "@config": [
         "./src/config"
+      ],
+      "@config/*": [
+        "./src/config/*"
       ]
     },
     "plugins": [
