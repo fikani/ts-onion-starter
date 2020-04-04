@@ -1,4 +1,3 @@
-import { AppConfig } from "@config";
 import { App } from "@infra/index";
 import express, { Express, Router } from "express";
 
@@ -6,7 +5,8 @@ export class ExpressServer implements App {
   private readonly app: Express;
 
   constructor(
-    private readonly config: AppConfig,
+    private readonly port: number,
+    private readonly host: string,
     private readonly healthCheckRouter: Router
   ) {
     this.app = express();
@@ -14,8 +14,8 @@ export class ExpressServer implements App {
 
   start(): Promise<void> {
     this.setupRoutes();
-    this.app.listen(this.config.port, this.config.host, () => {
-      console.log("Example app listening on port " + this.config.port);
+    this.app.listen(this.port, this.host, () => {
+      console.log("Example app listening on port " + this.port);
     });
 
     return Promise.resolve();
