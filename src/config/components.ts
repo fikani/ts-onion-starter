@@ -1,11 +1,13 @@
-import { asClass, asValue, createContainer, InjectionMode } from "awilix";
-import { ExpressServer } from "@infra/server/web";
 import config from "@config";
+import { ExpressServer } from "@infra/web";
+import { HealthCheckRouter } from "@infra/web/routes/healthcheck";
+import { asClass, asFunction, asValue, createContainer, InjectionMode } from "awilix";
 
 const components = {
   default: {
-    server: asClass(ExpressServer),
     config: asValue(config),
+    app: asClass(ExpressServer),
+    healthCheckRouter: asFunction(HealthCheckRouter).singleton(),
   },
   dev: {},
 };

@@ -1,3 +1,4 @@
-import { AppServer } from "@infra/server";
+import { App } from "@infra/App";
+export * from "./App";
 
-AppServer.create().start();
+App.create().start();

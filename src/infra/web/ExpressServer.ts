@@ -1,18 +1,19 @@
-import { AppServer } from "@infra/server";
+import { App } from "@infra/index";
 import { AppConfig } from "@config";
-import express, { Express } from "express";
+import express, { Express, Router } from "express";
 
-export class ExpressServer implements AppServer {
+export class ExpressServer implements App {
   private readonly app: Express;
 
-  constructor(private readonly config: AppConfig) {
+  constructor(
+    private readonly config: AppConfig,
+    private readonly healthCheckRouter: Router
+  ) {
     this.app = express();
   }
 
   start(): Promise<void> {
-    this.app.get("/", function (req, res) {
-      res.send("Hello World!");
-    });
+    this.app.use(this.healthCheckRouter);
 
     this.app.listen(this.config.port, this.config.host, () => {
       console.log("Example app listening on port " + this.config.port);
