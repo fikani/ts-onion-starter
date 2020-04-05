@@ -2,18 +2,31 @@ import { CreationParams, Logger } from "@domain/core";
 import pino from "pino";
 
 export class PinoLogger implements Logger {
-  private readonly logger!: pino.Logger;
+  private readonly logger: pino.Logger;
 
-  constructor(instance?: pino.Logger) {
-    this.logger = instance || pino();
+  constructor(pinoInstance: pino.Logger) {
+    this.logger = pinoInstance;
   }
-
-  fatal = this.logger.fatal;
-  error = this.logger.error;
-  warn = this.logger.warn;
-  info = this.logger.info;
-  debug = this.logger.debug;
-  trace = this.logger.trace;
+  
+  fatal(obj: any, ...args: any[]): void {
+    this.logger.fatal(obj, ...args);
+  }
+  error(obj: any, ...args: any[]): void {
+    this.logger.error(obj, ...args);
+  }
+  warn(obj: any, ...args: any[]): void {
+    this.logger.warn(obj, ...args);
+  }
+  info(obj: any, ...args: any[]): void {
+    this.logger.info(obj, ...args);
+  }
+  debug(obj: any, ...args: any[]): void {
+    this.logger.debug(obj, ...args);
+  }
+  trace(obj: any, ...args: any[]): void {
+    console.log('lalalal')
+    this.logger.trace(obj, ...args);
+  }
 
   child(params: CreationParams): Logger {
     return new PinoLogger(this.logger.child({ ...params }));
