@@ -3,7 +3,7 @@ import convict from "convict";
 
 export const defaultConfig = convict({
   env: {
-    format: ["prod", "dev"],
+    format: ["prod", "dev", "test"],
     default: "dev",
     arg: "nodeEnv",
     env: "NODE_ENV",

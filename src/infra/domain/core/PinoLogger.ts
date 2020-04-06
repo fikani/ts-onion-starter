@@ -24,7 +24,6 @@ export class PinoLogger implements Logger {
     this.logger.debug(obj, ...args);
   }
   trace(obj: any, ...args: any[]): void {
-    console.log('lalalal')
     this.logger.trace(obj, ...args);
   }
 

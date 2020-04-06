@@ -1,27 +1,40 @@
+import { Logger } from "@domain/core";
 import { App } from "@infra/index";
 import express, { Express, Router } from "express";
+import { Server } from "http";
 
 export class ExpressServer implements App {
-  private readonly app: Express;
+  public readonly express: Express;
+  private server?: Server;
 
   constructor(
     private readonly port: number,
     private readonly host: string,
-    private readonly healthCheckRouter: Router
+    private readonly healthCheckRouter: Router,
+    private readonly logger: Logger
   ) {
-    this.app = express();
+    this.express = express();
+  }
+  stop(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.server?.close((err) => {
+        if (err) reject(err);
+        resolve();
+      }) ?? resolve();
+    });
   }
 
-  start(): Promise<void> {
-    this.setupRoutes();
-    this.app.listen(this.port, this.host, () => {
-      console.log("Example app listening on port " + this.port);
+  start(): Promise<Server> {
+    return new Promise((resolve) => {
+      this.setupRoutes();
+      this.server = this.express.listen(this.port, this.host, () => {
+        this.logger.info("server started" + this.port);
+        resolve(this.server);
+      });
     });
-
-    return Promise.resolve();
   }
 
   private setupRoutes(): void {
-    this.app.use(this.healthCheckRouter);
+    this.express.use(this.healthCheckRouter);
   }
 }

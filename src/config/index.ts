@@ -3,7 +3,8 @@
 import { defaultConfig } from "@config/default";
 
 const env = defaultConfig.get("env");
-defaultConfig.loadFile(`./src/config/${env}.json`);
+console.log(`${__dirname}/${env}.json`)
+defaultConfig.loadFile(`${__dirname}/${env}.json`);
 defaultConfig.validate({ allowed: "strict" }); // throws error if config does not conform to schema
 
 const config = defaultConfig.getProperties();
